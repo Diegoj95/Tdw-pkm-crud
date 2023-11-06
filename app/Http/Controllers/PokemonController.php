@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\{ListarPokeRequest,PokemonRequest,TipoRequest };
+use App\Http\Requests\{ListarPokeRequest,PokemonRequest,TipoRequest,RegionRequest};
 use App\Repositories\PokemonRepository;
 class PokemonController extends Controller
 {    
@@ -20,7 +20,7 @@ class PokemonController extends Controller
         return $this->pokemonRepository->actualizarPokemon($request);
      }
 
-     public function listarPokemones(ListarPokeRequest $request){
+     public function listarPokemones(RegionRequest $request){
         return $this->pokemonRepository->listarPokemones($request);
      }
 

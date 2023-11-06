@@ -11,7 +11,7 @@ class Pokemon extends Model
     protected $table = 'pokemon';
 
     public function region(){
-        return $this->belongsTo(Region::class, 'region_id');
+        return $this->belongsTo(Region::class, 'region_id', 'id');
     }
 
     public function tipoUno(){

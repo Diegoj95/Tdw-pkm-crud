@@ -61,29 +61,27 @@ class PokemonRepository
     public function listarPokemones($request)
     {
         try {
-            $pokemon = Pokemon::whereHas('region', function($q) use ($request) {
-                $q->where('reg_nombre', $request->region);
-            })->with('region:id,reg_nombre')->get();
-            
-            
-
+            $pokemon = Pokemon::whereHas('region', function ($q) use ($request) {
+                $q->where('reg_nombre', $request->reg_nombre);
+            })->get();
+    
             return response()->json(["pokemon" => $pokemon], Response::HTTP_OK);
-          
         } catch (Exception $e) {
             Log::info([
                 "error" => $e->getMessage(),
                 "linea" => $e->getLine(),
                 "file" => $e->getFile(),
-                "metodo" => __METHOD__
+                "metodo" => __METHOD__,
             ]);
             return response()->json([
                 "error" => $e->getMessage(),
                 "linea" => $e->getLine(),
                 "file" => $e->getFile(),
-                "metodo" => __METHOD__
+                "metodo" => __METHOD__,
             ], Response::HTTP_BAD_REQUEST);
         }
-
+    
+    
         // try {
         //     $pokemon = Pokemon::whereIn('id', [3, 4, 5, 6, 7])->get();
         //     return response()->json(["pokemon" => $pokemon], Response::HTTP_OK);
@@ -103,13 +101,6 @@ class PokemonRepository
         //     ], Response::HTTP_BAD_REQUEST);
         // }
     }
-
-
-    // $pokemon = Pokemon::whereHas('region', function($q) use ($request) {
-    //     $q->where('reg_nombre', $request->region);
-    // })->with('region:id,reg_nombre')->get();
-
-
 
     //Segundo Punto a Desarrollar
     public function listarPokemonesPorTipo($request)
@@ -142,7 +133,6 @@ class PokemonRepository
     
     
     
-
     public function eliminarPokemon($request)
     {
         try {
