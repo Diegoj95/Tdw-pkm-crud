@@ -10,6 +10,7 @@ use App\Services\PokemonService;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Builder;
 
 class PokemonRepository
 {
@@ -103,19 +104,28 @@ class PokemonRepository
         // }
     }
 
+
+    // $pokemon = Pokemon::whereHas('region', function($q) use ($request) {
+    //     $q->where('reg_nombre', $request->region);
+    // })->with('region:id,reg_nombre')->get();
+
+
+
+    //Segundo Punto a Desarrollar
     public function listarPokemonesPorTipo($request)
     {
         try {
-            $tipo = $request->tipo;
-    
-            $pokemones = Pokemon::where('tipo1', $tipo)
-                ->orWhere('tipo2', $tipo)
-                ->get();
+            $pokemones = Pokemon::where(function ($query) use ($request) {
+                $query->whereHas('tipoUno', function (Builder $query) use ($request) {
+                    $query->where('tip_nombre', $request->tip_nombre);
+                })->orWhereHas('tipoDos', function (Builder $query) use ($request) {
+                    $query->where('tip_nombre', $request->tip_nombre);
+                });
+            })->with(['tipoUno:id,tip_nombre', 'tipoDos:id,tip_nombre'])->get();
     
             return response()->json(["pokemones" => $pokemones], Response::HTTP_OK);
-          
         } catch (Exception $e) {
-            Log::info([
+            Log::error([
                 "error" => $e->getMessage(),
                 "linea" => $e->getLine(),
                 "file" => $e->getFile(),
@@ -129,6 +139,8 @@ class PokemonRepository
             ], Response::HTTP_BAD_REQUEST);
         }
     }
+    
+    
     
 
     public function eliminarPokemon($request)
@@ -224,5 +236,4 @@ class PokemonRepository
             $poke->save();
         }
     }
-
 }

@@ -10,4 +10,6 @@ class TipoPokemon extends Model
     use HasFactory;
     protected $table = 'tipo_pokemon';
 
+    
+
 }

@@ -2,24 +2,28 @@
 
 namespace App\Http\Requests;
 
-
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
-class ListarPokeRequest extends FormRequest
+class TipoRequest extends FormRequest
 {
-        /**
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
     public function rules()
     {
         return [
-         "id"=>"required|exists:pokemon,id",
-         "region" => "required|exists:regions,reg_nombre"
+            'tip_nombre' => 'required|exists:tipo_pokemon,tip_nombre',
         ];
     }
 

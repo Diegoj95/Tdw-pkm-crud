@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\{ListarPokeRequest,PokemonRequest };
+use App\Http\Requests\{ListarPokeRequest,PokemonRequest,TipoRequest };
 use App\Repositories\PokemonRepository;
 class PokemonController extends Controller
 {    
@@ -24,7 +24,7 @@ class PokemonController extends Controller
         return $this->pokemonRepository->listarPokemones($request);
      }
 
-     public function listarPokemonesPorTipo(ListarPokeRequest $request){
+     public function listarPokemonesPorTipo(TipoRequest $request){
         return $this->pokemonRepository->listarPokemonesPorTipo($request);
      }
 
