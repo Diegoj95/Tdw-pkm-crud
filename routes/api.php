@@ -15,5 +15,6 @@ Route::get('listarPoke',[PokemonController::class, 'listarPokemones']);
 Route::get('eliminarPoke',[PokemonController::class, 'EliminarPokemon']);
 Route::get('cargarPokes',[PokemonController::class, 'CargarPokemon']);
 Route::get('listarPokemonesPorTipo',[PokemonController::class, 'listarPokemonesPorTipo']);
+Route::get('buscarPoke',[PokemonController::class, 'buscarPokemonPorNombre']);
 
 

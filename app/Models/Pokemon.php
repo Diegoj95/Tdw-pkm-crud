@@ -23,8 +23,3 @@ class Pokemon extends Model
     }
 
 }
-
-
-// relacion entre modelos 
-
-// where has o o orwherehas 

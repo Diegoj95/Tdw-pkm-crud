@@ -130,6 +130,32 @@ class PokemonRepository
             ], Response::HTTP_BAD_REQUEST);
         }
     }
+
+    // //Tercer Punto a Desarrollar
+    // public function buscarPokemonPorNombre($request)
+    // {
+    //     try {
+
+    //     }
+    
+    //     } catch (Exception $e) {
+    //         Log::error([
+    //             "error" => $e->getMessage(),
+    //             "linea" => $e->getLine(),
+    //             "file" => $e->getFile(),
+    //             "metodo" => __METHOD__
+    //         ]);
+    //         return response()->json([
+    //             "error" => $e->getMessage(),
+    //             "linea" => $e->getLine(),
+    //             "file" => $e->getFile(),
+    //             "metodo" => __METHOD__
+    //         ], Response::HTTP_BAD_REQUEST);
+    //     }
+    // }
+    
+    
+    
     
     
     
