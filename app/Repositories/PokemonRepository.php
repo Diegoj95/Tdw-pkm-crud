@@ -131,28 +131,35 @@ class PokemonRepository
         }
     }
 
-    // //Tercer Punto a Desarrollar
-    // public function buscarPokemonPorNombre($request)
-    // {
-    //     try {
+    // Tercer Punto a Desarrollar
+    public function buscarPokemonPorNombre($request)
+    {
+        try {
+            $nombreIngresado = $request->nombre;
 
-    //     }
-    
-    //     } catch (Exception $e) {
-    //         Log::error([
-    //             "error" => $e->getMessage(),
-    //             "linea" => $e->getLine(),
-    //             "file" => $e->getFile(),
-    //             "metodo" => __METHOD__
-    //         ]);
-    //         return response()->json([
-    //             "error" => $e->getMessage(),
-    //             "linea" => $e->getLine(),
-    //             "file" => $e->getFile(),
-    //             "metodo" => __METHOD__
-    //         ], Response::HTTP_BAD_REQUEST);
-    //     }
-    // }
+            $pokemon = Pokemon::whereRaw('SOUNDEX(nombre) = SOUNDEX(?)', [$nombreIngresado])
+                ->with('region:id,reg_nombre', 'tipoUno:id,tip_nombre', 'tipoDos:id,tip_nombre')
+                ->first();
+
+            return response()->json(["pokemon" => $pokemon], Response::HTTP_OK);
+        } catch (Exception $e) {
+            Log::error([
+                "error" => $e->getMessage(),
+                "linea" => $e->getLine(),
+                "file" => $e->getFile(),
+                "metodo" => __METHOD__
+            ]);
+            return response()->json([
+                "error" => $e->getMessage(),
+                "linea" => $e->getLine(),
+                "file" => $e->getFile(),
+                "metodo" => __METHOD__
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+
+
     
     
     

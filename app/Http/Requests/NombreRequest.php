@@ -17,7 +17,7 @@ class NombreRequest extends FormRequest
     public function rules()
     {
         return [
-            "nombre" => "required|unique:pokemon|string",
+            "nombre" => "required|string",
         ];
     }
 
