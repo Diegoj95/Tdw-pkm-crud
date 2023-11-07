@@ -231,6 +231,7 @@ class PokemonRepository
             //     $poke->numero_pokedex = $idPokedex;
             //     $poke->save();
             // }
+            //
             
             $pokemonServiceTipo = new PokemonService;
             $pokemonTipo = $pokemonServiceTipo->CargarPokemonIndividual($idPokedex);
