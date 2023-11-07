@@ -57,7 +57,7 @@ class PokemonRepository
             ], Response::HTTP_BAD_REQUEST);
         }
     }
-
+    //Primer Punto a Desarrollar
     public function listarPokemones($request)
     {
         try {
@@ -158,12 +158,9 @@ class PokemonRepository
         }
     }
 
+    // Cuarto Punto a Desarrollar
 
 
-    
-    
-    
-    
     
     
     public function eliminarPokemon($request)
@@ -194,8 +191,8 @@ class PokemonRepository
     {
         try {
             for ($i = 1; $i <= 9; $i++) {
-              //$this->cargaPokemonPorRegion($i);
-             CargaPokemonesJob::dispatch($i);
+              $this->cargaPokemonPorRegion($i);
+              CargaPokemonesJob::dispatch($i);
             }
 
             return response()->json(["ok"], Response::HTTP_OK);
@@ -228,6 +225,7 @@ class PokemonRepository
             Log::info(["pokemon a revisar "=> $pokemon]);
 
             $idPokedex = str_replace('https://pokeapi.co/api/v2/pokemon-species/','', $pokemon['url']);
+            Log::info("Valor de idPokedex: " . $idPokedex);
             
             $pokemonServiceTipo = new PokemonService;
             $pokemonTipo = $pokemonServiceTipo->CargarPokemonIndividual($idPokedex);
