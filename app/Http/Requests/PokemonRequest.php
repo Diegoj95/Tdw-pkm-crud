@@ -19,7 +19,8 @@ class PokemonRequest extends FormRequest
         return [
             "id" => "nullable|exists:pokemon,id",
             "nombre" => "required|unique:pokemon|string",
-            "region" => "required|exists:regions,reg_nombre"
+            "region" => "required|exists:regions,reg_nombre",
+            "numero_pokedex" => "required|unique:pokemon|integer",
         ];
     }
 

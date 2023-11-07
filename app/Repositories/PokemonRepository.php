@@ -158,10 +158,6 @@ class PokemonRepository
         }
     }
 
-    // Cuarto Punto a Desarrollar
-
-
-    
     
     public function eliminarPokemon($request)
     {
@@ -191,7 +187,7 @@ class PokemonRepository
     {
         try {
             for ($i = 1; $i <= 9; $i++) {
-              $this->cargaPokemonPorRegion($i);
+              //$this->cargaPokemonPorRegion($i);
               CargaPokemonesJob::dispatch($i);
             }
 
@@ -217,20 +213,29 @@ class PokemonRepository
     {
         $pokemonServiceRegion = new PokemonService;
         $pokemones = $pokemonServiceRegion->CargarRegiones($id);
-        $region = new Region();
-        $region->reg_nombre = $pokemones['body']['main_region']['name'];
-        $region->save();
+        // $region = new Region();
+        // $region->reg_nombre = $pokemones['body']['main_region']['name'];
+        // $region->save();
         foreach ($pokemones['body']['pokemon_species'] as $pokemon) {
 
-            Log::info(["pokemon a revisar "=> $pokemon]);
+           // Log::info(["pokemon a revisar "=> $pokemon]);
 
             $idPokedex = str_replace('https://pokeapi.co/api/v2/pokemon-species/','', $pokemon['url']);
-            Log::info("Valor de idPokedex: " . $idPokedex);
+            Log::info(["id pokedex"=> $idPokedex]);
+            $idPokedex = intval($idPokedex);
+            $poke = Pokemon::where('nombre', $pokemon['name'])->first();
+
+            // Requisito 4
+            if ($poke) {
+                // Actualizar el valor de numero_pokedex con idpokedex
+                $poke->numero_pokedex = $idPokedex;
+                $poke->save();
+            }
             
             $pokemonServiceTipo = new PokemonService;
             $pokemonTipo = $pokemonServiceTipo->CargarPokemonIndividual($idPokedex);
 
-            Log::info([" poke x tipo"=> $pokemonTipo['body']['types'][0]['type']['name']]);
+            //Log::info([" poke x tipo"=> $pokemonTipo['body']['types'][0]['type']['name']]);
          
             $tipoUno = TipoPokemon::where('tip_nombre', $pokemonTipo['body']['types'][0]['type']['name'])->first();
             if(!$tipoUno){
@@ -239,7 +244,7 @@ class PokemonRepository
                 $tipoUno->save();
             }
             if(isset($pokemonTipo['body']['types'][1])){
-                Log::info([" poke x tipo"=> $pokemonTipo['body']['types'][1]['type']['name']]);
+                //Log::info([" poke x tipo"=> $pokemonTipo['body']['types'][1]['type']['name']]);
 
                 $tipoDos = TipoPokemon::where('tip_nombre', $pokemonTipo['body']['types'][1]['type']['name'])->first();
                 if(!$tipoDos){
@@ -249,12 +254,13 @@ class PokemonRepository
                 }
             }
 
-            $poke = new Pokemon();
-            $poke->nombre = $pokemon['name'];
-            $poke->region_id = $region->id;
-            $poke->tipo_uno_id =$tipoUno->id;
-            $poke->tipo_dos_id = isset($pokemonTipo['body']['types'][1]) ? $tipoDos->id : null;
-            $poke->save();
+            // $poke = new Pokemon();
+            // $poke->nombre = $pokemon['name'];
+            // $poke->region_id = $region->id;
+            // $poke->tipo_uno_id =$tipoUno->id;
+            // $poke->tipo_dos_id = isset($pokemonTipo['body']['types'][1]) ? $tipoDos->id : null;
+            // $poke->numero_pokedex = $idPokedex;
+            // $poke->save();
         }
     }
 }

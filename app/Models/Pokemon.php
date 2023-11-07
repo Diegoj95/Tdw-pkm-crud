@@ -9,7 +9,7 @@ class Pokemon extends Model
 {
     use HasFactory;
     protected $table = 'pokemon';
-
+    protected $fillable = ['numero_pokedex', 'nombre', 'region_id', 'tipo_uno_id', 'tipo_dos_id'];
 
     public function region(){
         return $this->belongsTo(Region::class, 'region_id', 'id');
