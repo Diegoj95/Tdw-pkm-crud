@@ -213,24 +213,24 @@ class PokemonRepository
     {
         $pokemonServiceRegion = new PokemonService;
         $pokemones = $pokemonServiceRegion->CargarRegiones($id);
-        // $region = new Region();
-        // $region->reg_nombre = $pokemones['body']['main_region']['name'];
-        // $region->save();
+        $region = new Region();
+        $region->reg_nombre = $pokemones['body']['main_region']['name'];
+        $region->save();
         foreach ($pokemones['body']['pokemon_species'] as $pokemon) {
 
            // Log::info(["pokemon a revisar "=> $pokemon]);
 
             $idPokedex = str_replace('https://pokeapi.co/api/v2/pokemon-species/','', $pokemon['url']);
             Log::info(["id pokedex"=> $idPokedex]);
-            $idPokedex = intval($idPokedex);
+            // $idPokedex = intval($idPokedex);
             $poke = Pokemon::where('nombre', $pokemon['name'])->first();
 
-            // Requisito 4
-            if ($poke) {
-                // Actualizar el valor de numero_pokedex con idpokedex
-                $poke->numero_pokedex = $idPokedex;
-                $poke->save();
-            }
+            // // Requisito 4
+            // if ($poke) {
+            //     // Actualizar el valor de numero_pokedex con idpokedex
+            //     $poke->numero_pokedex = $idPokedex;
+            //     $poke->save();
+            // }
             
             $pokemonServiceTipo = new PokemonService;
             $pokemonTipo = $pokemonServiceTipo->CargarPokemonIndividual($idPokedex);
@@ -254,13 +254,13 @@ class PokemonRepository
                 }
             }
 
-            // $poke = new Pokemon();
-            // $poke->nombre = $pokemon['name'];
-            // $poke->region_id = $region->id;
-            // $poke->tipo_uno_id =$tipoUno->id;
-            // $poke->tipo_dos_id = isset($pokemonTipo['body']['types'][1]) ? $tipoDos->id : null;
-            // $poke->numero_pokedex = $idPokedex;
-            // $poke->save();
+            $poke = new Pokemon();
+            $poke->nombre = $pokemon['name'];
+            $poke->region_id = $region->id;
+            $poke->tipo_uno_id =$tipoUno->id;
+            $poke->tipo_dos_id = isset($pokemonTipo['body']['types'][1]) ? $tipoDos->id : null;
+            $poke->numero_pokedex = $idPokedex;
+            $poke->save();
         }
     }
 }
